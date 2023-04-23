@@ -1,0 +1,46 @@
+.form-control {
+  border: 1px solid #e0e2e9;
+  border-radius: 8px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  transition: box-shadow 0.3s ease;
+  position: relative;
+  &:focus-within {
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px #af0000;
+    border-color: #df0000;
+  }
+  .icon {
+    flex-shrink: 0;
+    padding-left: 20px;
+    color: #ccc;
+  }
+  input {
+    flex-grow: 1;
+    // height: 100%;
+    height: 50%;
+    border: none;
+    outline: none;
+    margin: auto 10px;
+    padding: 5px 10px;
+    // border-radius: inherit;
+    font-size: 14px;
+    color: #444;
+    letter-spacing: 0.1px;
+  }
+  .visibility {
+    margin-right: 20px;
+    color: #aaa;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    &:hover {
+      background-color: #eee;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+[build]
+  publish = "dist/"
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://clickzone.herokuapp.com/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[build.environment]
+  AWS_ACCESS_KEY_ID = "YOUR_AWS_ACCESS_KEY_ID"
+  AWS_SECRET_ACCESS_KEY = "YOUR_AWS_SECRET_ACCESS_KEY"
