@@ -1,7 +1,7 @@
 import styles from "./style.module.scss";
 import classNames from "classnames/bind";
 
-import { Navbar, Sidebar, DataTable, PersistUser } from "~/components";
+import { DataTable } from "~/components";
 import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +9,7 @@ import { useRefreshToken } from "~/hook";
 import { customerSet, selectAllCustomers } from "~/store/customerSlice";
 import dayjs from "dayjs";
 
-let cx = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 const UserList = () => {
   const dispatch = useDispatch();
@@ -52,19 +52,13 @@ const UserList = () => {
   }, [accessToken]);
 
   return (
-    <PersistUser>
-      <div className={cx("list")}>
-        <Sidebar />
-        <div className={cx("listContainer")}>
-          <Navbar />
-          <DataTable
-            title={"Customers"}
-            columns={customerColumns}
-            rows={customers}
-          />
-        </div>
-      </div>
-    </PersistUser>
+    <div className={cx("container")}>
+      <DataTable
+        title={"Customers"}
+        columns={customerColumns}
+        rows={customers}
+      />
+    </div>
   );
 };
 

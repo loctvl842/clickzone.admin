@@ -24,7 +24,7 @@ const authSlice = createSlice({
       state.accessToken = accessToken;
       Cookies.set("refreshToken", refreshToken);
     },
-    authFail(_, action) {
+    authFail(state, action) {
       state.fetching = false;
       state.error = true;
       state.message = action.payload;

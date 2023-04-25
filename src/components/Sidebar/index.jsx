@@ -21,7 +21,7 @@ const Sidebar = () => {
       <div className={cx("top")}>
         <NavLink to="/" style={{ textDecoration: "none" }}>
           <span className={cx("logo")}>
-            <Logo size={20} />
+            <Logo size={25} />
           </span>
         </NavLink>
       </div>

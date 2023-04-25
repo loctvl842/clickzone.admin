@@ -1,5 +1,5 @@
 .datatable {
-  height: 600px;
+  // height: 600px;
   padding: 20px;
 
   .datatableTitle {
@@ -10,7 +10,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     .link {
       text-decoration: none;
       color: green;
@@ -22,7 +21,6 @@
       cursor: pointer;
     }
   }
-
   .cellWithImg {
     display: flex;
     align-items: center;

@@ -4,10 +4,10 @@ import classNames from "classnames/bind";
 // libraries
 import { PulseLoader } from "react-spinners";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // components
-import { FormControl, TextEditor } from "~/components";
+import { FormControl, TextEditor, Categories } from "~/components";
 
 // icons
 import { AddAPhoto, Close } from "@mui/icons-material";
@@ -16,7 +16,7 @@ import { AddAPhoto, Close } from "@mui/icons-material";
 import { usePreviewImage } from "~/hook";
 
 // actions
-import { addProduct, editProduct } from "~/store/productSlice";
+import { addProduct, editProduct, productStart } from "~/store/productSlice";
 
 // s3
 import { uploadImage } from "~/s3";
@@ -33,6 +33,12 @@ const ProductForm = ({ product }) => {
 
   const dispatch = useDispatch();
   const [productImgFile, setProductImgFile] = useState(null);
+  const [category, setCategory] = useState({
+    id: -1,
+    name: "",
+  });
+  const productStatus = useSelector((state) => state.product.status);
+  console.log(productStatus);
   let previewImg = usePreviewImage(productImgFile);
 
   const handleCancelImageBtnClick = (e) => {
@@ -55,6 +61,7 @@ const ProductForm = ({ product }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(productStart());
     const formData = new FormData(e.currentTarget);
     const dataArray = [...formData];
     const inputData = Object.fromEntries(dataArray);
@@ -65,6 +72,7 @@ const ProductForm = ({ product }) => {
         id: product ? product.id : -1,
         name: inputData["product-creation_name"],
         image_url: imageUrl,
+        category_id: inputData["product-creation_category"],
         price: inputData["product-creation_price"],
         old_price: inputData["product-creation_old-price"] || null,
         description: document.querySelector(".ql-editor").innerHTML,
@@ -91,6 +99,7 @@ const ProductForm = ({ product }) => {
       priceEle.value = product.price;
       descriptionEle.innerHTML = product.description;
       setProductImgFile(product.image_url);
+      setCategory({ id: product.category_id, name: product.category_name });
     }
   }, [action, product]);
 
@@ -170,6 +179,26 @@ const ProductForm = ({ product }) => {
                   />
                 </div>
                 <div className={cx("form-control-wrapper")}>
+                  <div className={cx("categories-container")}>
+                    <div className={cx("showcase")}>
+                      {category.name === "" && (
+                        <div className={cx("placeholder")}>
+                          <p>Category</p>
+                        </div>
+                      )}
+                      <input
+                        type="hidden"
+                        name="product-creation_category"
+                        value={category.id}
+                      />
+                      <p>{category.name}</p>
+                      <div className={cx("categories-wrapper")}>
+                        <Categories setCategory={setCategory} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className={cx("form-control-wrapper")}>
                   <FormControl
                     name="product-creation_old-price"
                     placeholder="Old Price (if available)"
@@ -194,8 +223,14 @@ const ProductForm = ({ product }) => {
           </div>
           <div className={cx("submit-btn-wrapper")}>
             <button type="submit" className={cx("submit-btn")}>
-              <span>{action === EDIT ? "Edit" : "Create"}</span>
-              <PulseLoader color="#fff" size={5} loading={false} />
+              {productStatus !== "loading" && (
+                <span>{action === EDIT ? "Edit" : "Create"}</span>
+              )}
+              <PulseLoader
+                color="#fff"
+                size={5}
+                loading={productStatus === "loading"}
+              />
             </button>
           </div>
         </form>

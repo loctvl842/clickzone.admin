@@ -9,18 +9,21 @@ const DataTable = ({ title, columns, rows }) => {
   return (
     <div className={cx("datatable")}>
       <div className={cx("datatableTitle")}>{title}</div>
-      <DataGrid
-        className={cx("datagrid")}
-        rows={rows}
-        columns={columns}
-        pageSizeOptions={[3]}
-        initialState={{
-          pagination: {
-            paginationModel: { pageSize: 3, page: 0 },
-          },
-        }}
-        checkboxSelection
-      />
+      <div className={cx("table-content")}>
+        <DataGrid
+          className={cx("datagrid")}
+          rows={rows}
+          autoHeight={true}
+          rowHeight={70}
+          columns={columns}
+          pageSizeOptions={[10]}
+          initialState={{
+            pagination: {
+              paginationModel: { pageSize: 10, page: 0 },
+            },
+          }}
+        />
+      </div>
     </div>
   );
 };

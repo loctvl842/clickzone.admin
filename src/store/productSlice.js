@@ -17,7 +17,11 @@ const initialState = productAdapter.getInitialState({
 const productSlice = createSlice({
   name: "product",
   initialState,
-  reducers: {},
+  reducers: {
+    productStart(state) {
+      state.status = "loading";
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchProductsByPage.pending, (state) => {
@@ -26,23 +30,35 @@ const productSlice = createSlice({
       })
       .addCase(fetchProductsByPage.fulfilled, (state, action) => {
         const { products } = action.payload;
-        state.status = "succeeded";
         productAdapter.setAll(state, products);
+        state.status = "succeeded";
       });
-    builder.addCase(addProduct.fulfilled, (state, action) => {
-      const { product: newProduct } = action.payload;
-      productAdapter.addOne(state, newProduct);
-    });
+    builder
+      .addCase(addProduct.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(addProduct.fulfilled, (state, action) => {
+        const { product: newProduct } = action.payload;
+        productAdapter.addOne(state, newProduct);
+        state.status = "succeeded";
+      });
+    builder
+      .addCase(editProduct.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(editProduct.fulfilled, (state, action) => {
+        const { product: updatedProduct } = action.payload;
+        console.log(updatedProduct);
+        productAdapter.updateOne(state, {
+          id: updatedProduct.id,
+          changes: updatedProduct,
+        });
+        state.status = "succeeded";
+      });
     builder.addCase(removeProduct.fulfilled, (state, action) => {
       const productId = action.payload;
       productAdapter.removeOne(state, productId);
-    });
-    builder.addCase(editProduct.fulfilled, (state, action) => {
-      const { product: updatedProduct } = action.payload;
-      productAdapter.updateOne(state, {
-        id: updatedProduct.id,
-        changes: updatedProduct,
-      });
+      state.status = "succeeded";
     });
   },
 });
@@ -51,6 +67,8 @@ const productSlice = createSlice({
 export default productSlice.reducer;
 
 // actions
+export const { productStart } = productSlice.actions;
+
 export const fetchProductsByPage = createAsyncThunk(
   "product/fetchProductsByPage",
   async ({ sort, page }) => {

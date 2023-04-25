@@ -1,7 +1,7 @@
 import styles from "./style.module.scss";
 import classNames from "classnames/bind";
 
-import { Navbar, Sidebar, DataTable, PersistUser } from "~/components";
+import { DataTable } from "~/components";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -21,23 +21,24 @@ const ProductList = () => {
   const productStatus = useSelector((state) => state.product.status);
 
   const productColumns = [
-    { field: "id", headerName: "ID", width: 70 },
-    { field: "name", headerName: "Name", width: 230 },
+    { field: "id", headerName: "ID", width: 30 },
     {
       field: "image_url",
       headerName: "Image",
-      width: 70,
+      width: 90,
       renderCell: (params) => {
         return <img className={cx("image")} src={params.row.image_url} />;
       },
     },
+    { field: "name", headerName: "Name", width: 400 },
+    { field: "category_name", headerName: "Category", width: 250 },
     { field: "price", headerName: "Price", width: 100 },
     { field: "old_price", headerName: "Old Price", width: 100 },
-    { field: "description", headerName: "Description", width: 450 },
+    { field: "description", headerName: "Description", width: 600 },
     {
       field: "action",
       headerName: "Action",
-      width: 200,
+      width: 120,
       renderCell: (params) => {
         return (
           <div className={cx("cell-action")}>
@@ -92,27 +93,12 @@ const ProductList = () => {
   }, [dispatch, productStatus]);
 
   return (
-    <PersistUser>
-      <div className={cx("list")}>
-        <Sidebar />
-        <div className={cx("listContainer")}>
-          <Navbar />
-          <div className={cx("container")}>
-            <button
-              className={cx("add-btn")}
-              onClick={handleAddNewProductClick}
-            >
-              Add New
-            </button>
-            <DataTable
-              title={"Product"}
-              columns={productColumns}
-              rows={products}
-            />
-          </div>
-        </div>
-      </div>
-    </PersistUser>
+    <div className={cx("container")}>
+      <button className={cx("add-btn")} onClick={handleAddNewProductClick}>
+        Add New
+      </button>
+      <DataTable title={"Product"} columns={productColumns} rows={products} />
+    </div>
   );
 };
 

@@ -1,9 +1,8 @@
 import styles from "./style.module.scss";
 import classNames from "classnames/bind";
 
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
-import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { PulseLoader } from "react-spinners";
 
@@ -13,16 +12,15 @@ import { Mail, Key } from "@mui/icons-material";
 // components
 import { Logo, FormControl } from "~/components";
 // store
-import { authStart, authSuccess, authFail, authReset } from "~/store/authSlice";
+import { authReset } from "~/store/authSlice";
 // hook
-import useLogin from "~/hook/useLogin";
+import { useLogin } from "~/hook";
 // util
 import { getFormData } from "~/util";
 
 let cx = classNames.bind(styles);
 
 const Login = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const login = useLogin();
   const { fetching, error, message } = useSelector((state) => state.auth);
@@ -30,17 +28,10 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     const formData = getFormData(e.currentTarget);
-    try {
-      dispatch(authStart());
-      const tokens = await login({
-        email: formData.login_email,
-        password: formData.login_password,
-      });
-      dispatch(authSuccess(tokens));
-      navigate("/home");
-    } catch (err) {
-      dispatch(authFail(err.response.data.message));
-    }
+    await login({
+      email: formData.login_email,
+      password: formData.login_password,
+    });
   };
 
   useEffect(() => {

@@ -15,3 +15,31 @@ export function formatCurrency(amount) {
 export function initArray(size) {
   return Array(parseInt(size)).fill(0);
 }
+
+export function groupCategories(categories) {
+  const menu = categories.reduce(
+    ({ categoriesObj, hash }, category) => {
+      if (!categoriesObj[category.id] && !hash[category.id]) {
+        categoriesObj[category.id] = {
+          id: category.id,
+          name: category.name,
+        };
+        hash[category.id] = true;
+        if (category.child_id) {
+          categoriesObj[category.id].categories = [];
+        }
+      }
+      if (category.child_id) {
+        const child = {
+          id: category.child_id,
+          name: category.child_name,
+        };
+        categoriesObj[category.id].categories.push(child);
+        hash[child.id] = true;
+      }
+      return { categoriesObj, hash };
+    },
+    { categoriesObj: {}, hash: {} }
+  );
+  return Object.values(menu.categoriesObj);
+}

@@ -1,5 +1,7 @@
 .sidebar {
   flex: 1;
+  min-width: 300px;
+  flex-shrink: 0;
   border-right: 0.5px solid rgb(230, 227, 227);
   min-height: 100vh;
   background-color: white;
@@ -24,7 +26,7 @@
 
   .center {
     padding-left: 10px;
-
+    padding-right: 10px;
     ul {
       list-style: none;
       margin: 0;
@@ -41,8 +43,9 @@
       li {
         display: flex;
         align-items: center;
-        padding: 10px;
+        padding: 15px;
         cursor: pointer;
+        transition: all 0.2s ease;
         &.active {
           background-color: rgba(223, 0, 0, 0.2);
         }
@@ -51,7 +54,7 @@
         }
 
         .icon {
-          font-size: 18px;
+          font-size: 20px;
           color: #777;
         }
 
