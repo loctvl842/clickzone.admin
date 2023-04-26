@@ -38,7 +38,6 @@ const ProductForm = ({ product }) => {
     name: "",
   });
   const productStatus = useSelector((state) => state.product.status);
-  console.log(productStatus);
   let previewImg = usePreviewImage(productImgFile);
 
   const handleCancelImageBtnClick = (e) => {
