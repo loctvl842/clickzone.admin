@@ -1,8 +1,9 @@
 // pages
-import Home from "~/pages/Home";
-import Login from "~/pages/Login";
-import CustomerList from "~/pages/CustomerList";
-import ProductList from "~/pages/ProductList";
+import Home from "./Home";
+import Login from "./Login";
+import CustomerList from "./CustomerList";
+import ProductList from "./ProductList";
+import OrderList from "./OrderList";
 import MainLayout from "~/layout/MainLayout";
 
 // if layout is null, page will use `EmptyLayout` in ~/layout
@@ -11,6 +12,7 @@ const pages = [
   { path: "/login", content: Login },
   { path: "/customer", content: CustomerList, layout: MainLayout },
   { path: "/product", content: ProductList, layout: MainLayout },
+  { path: "/order", content: OrderList, layout: MainLayout },
 ];
 
 export default pages;

@@ -43,3 +43,27 @@ export function groupCategories(categories) {
   );
   return Object.values(menu.categoriesObj);
 }
+
+export function groupOrdersInDetail(orders) {
+  const menu = orders.reduce((ordersObj, order) => {
+    if (!ordersObj[order.id]) {
+      ordersObj[order.id] = {
+        id: order.id,
+        total: order.total,
+        user_id: order.user_id,
+        username: order.username,
+        order_items: [],
+        created_at: order.created_at,
+      };
+    }
+    const order_item = {
+      id: order.product_id,
+      name: order.product_name,
+      quantity: order.quantity,
+      price: order.price,
+    };
+    ordersObj[order.id].order_items.push(order_item);
+    return ordersObj;
+  }, {});
+  return Object.values(menu);
+}

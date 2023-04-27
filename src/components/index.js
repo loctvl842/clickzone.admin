@@ -4,6 +4,7 @@ export { default as DataTable } from "./DataTable";
 export { default as Featured } from "./Featured";
 export { default as FormControl } from "./FormControl";
 export { default as Logo } from "./Logo";
+export { default as OrderTable } from "./OrderTable";
 export { default as Sidebar } from "./Sidebar";
 export { default as Table } from "./Table";
 export { default as TextEditor } from "./TextEditor";

@@ -52,10 +52,14 @@ const Sidebar = () => {
               </li>
             )}
           </NavLink>
-          <li>
-            <CreditCard className={cx("icon")} />
-            <span>Orders</span>
-          </li>
+          <NavLink to="/order" style={{ textDecoration: "none" }}>
+            {({ isActive }) => (
+              <li className={cx({ active: isActive })}>
+                <CreditCard className={cx("icon")} />
+                <span>Orders</span>
+              </li>
+            )}
+          </NavLink>
           <li>
             <LocalShipping className={cx("icon")} />
             <span>Delivery</span>

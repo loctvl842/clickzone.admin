@@ -4,6 +4,7 @@ import userReducer from "./userSlice";
 import productReducer from "./productSlice";
 import modalReducer from "./modalSlice";
 import customerReducer from "./customerSlice";
+import orderReducer from "./orderSlice";
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     product: productReducer,
     modal: modalReducer,
     customer: customerReducer,
+    order: orderReducer,
   },
 });

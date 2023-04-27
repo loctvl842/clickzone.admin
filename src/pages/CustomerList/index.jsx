@@ -16,7 +16,6 @@ const UserList = () => {
   const accessToken = useSelector((state) => state.auth.accessToken);
   const refresh = useRefreshToken();
   const customers = useSelector((state) => selectAllCustomers(state));
-  console.log(customers);
 
   const customerColumns = [
     { field: "id", headerName: "ID", width: 70 },
