@@ -17,7 +17,7 @@ const DataTable = ({ title, columns, rows, getRowHeight }) => {
           // rowHeight={270}
           getRowHeight={getRowHeight}
           columns={columns}
-          pageSizeOptions={[10]}
+          pageSizeOptions={[5]}
           initialState={{
             pagination: {
               paginationModel: { pageSize: 10, page: 0 },

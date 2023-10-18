@@ -16,7 +16,16 @@ const s3 = new S3({
 
 export const generateUploadUrl = (file) => {
   const ext = file.type.split("/")[1];
-  const imageName = uuidv4() + "." + ext;
+
+  const getTimestamp = () => Math.floor(Date.now() / 1000);
+  const getFileName = (file) => {
+    const fileNameWithExt = file.name
+    const ext = "." + fileNameWithExt.split(".").pop();
+    const fileName = fileNameWithExt.replace(ext, "");
+    return fileName
+  };
+
+  const imageName = getTimestamp() + '-' + getFileName(file) + "." + ext;
   const params = {
     Bucket: bucketName,
     Key: imageName,
@@ -40,4 +49,3 @@ export const uploadImage = async (file) => {
   const imageUrl = s3url.split("?")[0];
   return imageUrl;
 };
-
